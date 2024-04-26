@@ -1,22 +1,18 @@
+/* eslint-disable react/prop-types */
 //Named Export - props: { author: "", content: "" }
+
 export function NamedPost(props) {
     return (
-        < div >
+        <div>
             <p>
                 <strong>{props.author}</strong>
             </p>
-            <p>{props.content}</p>
-        </div >
-    )
+            <p>
+                {props.content}
+            </p>
+        </div>
+    );
 }
-//Default Export
-function DefaultPost() {
-    return (
-        <p>Default export Post</p>
-    )
-}
-
-export default DefaultPost
 
 /*
     Default Exports -             

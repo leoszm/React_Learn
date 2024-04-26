@@ -1,31 +1,27 @@
-import Post from "./Post";
-import { NamedPost } from "./Post";
 import { Header } from './components/Header';
+import { NamedPost } from './Post';
 
+import styles from './App.module.css';
 import './global.css';
+import { Sidebar } from './components/Sidebar';
 
 function App() {
   return (
     <div>
       <Header />
-      <h1>Hello World!</h1>
-      <h2>Olá Mundo</h2>
-      <input
-        type="button"
-        value="teste"
-      />
-      <h3>Exemplo Default Export</h3>
-      <Post />
-      <h3>Exemplo Named Export</h3>
-      <NamedPost
-        author="Leonardo"
-        content="Lorem ipsum dolor sit amet..."
-      />
-
-      <NamedPost
-        author="Daniel"
-        content="Max Verstappen"
-      />
+      <div className={styles.wrapper}>
+        <Sidebar />
+        <main>
+          <NamedPost
+            author="Diego Fernandes"
+            content="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusamus autem dignissimos quo velit qui nulla iusto, doloribus nobis quod, laudantium quidem! Placeat, veniam exercitationem unde quia obcaecati illum mollitia eum!"
+          />
+          <NamedPost
+            author="Gabriel Buzzi"
+            content="Um novo post muito legal"
+          />
+        </main>
+      </div>
     </div>
   )
 }
