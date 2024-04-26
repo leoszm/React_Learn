@@ -1,11 +1,13 @@
 import Post from "./Post";
 import { NamedPost } from "./Post";
+import { Header } from './components/Header';
 
-import './styles.css';
+import './global.css';
 
 function App() {
   return (
     <div>
+      <Header />
       <h1>Hello World!</h1>
       <h2>Olá Mundo</h2>
       <input
