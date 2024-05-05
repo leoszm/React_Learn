@@ -11,6 +11,8 @@ export function Post({ author, publishedAt, content }) {
     const [comments, setComments] = useState([
         'post muito bacana, hein?!'
     ]);
+
+    const [newCommentText, setNewCommentText] = useState('')
     /* Através do mdn intl
         const publishedDateFormatted = new Intl.DateTimeFormat('pt-BR',
             {
@@ -35,6 +37,24 @@ export function Post({ author, publishedAt, content }) {
         //imutabilidade
         //setComments([1,2,3]); limitase quando chega ao 3, para tratar isso a forma esta abaixo
         setComments([...comments, newCommentText]);
+
+        setNewCommentText('');
+    }
+    function handleNewCommentChange() {
+        event.target.setCustomValidity('');
+        setNewCommentText(event.target.value);
+    }
+
+    function handleNewCommentInvalid(){
+        event.target.setCustomValidity('Esse campo é obrigatório!');
+    }
+
+    function deleteComment(commentToDelete) {
+        //imutabilidade -> as variáveis não sofrem mutação, nós criamos um novo valor(um novo espaço na memória)
+        const commentsWithoutDeletedOne = comment.filter(comment => {
+            return comment !== commentToDelete;
+        })
+        setComments(commentsWithoutDeletedOne);
     }
     return (
         <article className={styles.post}>
@@ -55,26 +75,38 @@ export function Post({ author, publishedAt, content }) {
             <div className={styles.content}>
                 {content.map(line => {
                     if (line.type === 'paragraph') {
-                        return <p>{line.content}</p>
+                        return <p key={line.content}>{line.content}</p>
                     }
                     else if (line.type === 'link') {
-                        return <p><a href="#">{line.content}</a></p>
+                        return <p key={line.content}><a href="#">{line.content}</a></p>
                     }
                 })}
             </div>
 
             <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
                 <strong>Deixe seu feedback</strong>
-                <textarea className="" 
-                name="comment"
-                placeholder='Deixe um comentário'></textarea>
+                <textarea
+                    className=""
+                    name="comment"
+                    value={newCommentText}
+                    placeholder='Deixe um comentário'
+                    onChange={handleNewCommentChange}
+                    onInvalid={handleNewCommentInvalid}
+                    required
+                ></textarea>
                 <footer>
                     <button type='submit'>Comentar</button>
                 </footer>
             </form>
             <div className={styles.commentList}>
                 {comments.map(comment => {
-                    return <Comment content={comment} />
+                    return (
+                        <Comment
+                            key={comment}
+                            content={comment}
+                            onDeleteComment={deleteComment}
+                        />
+                    )
                 })}
             </div>
         </article>

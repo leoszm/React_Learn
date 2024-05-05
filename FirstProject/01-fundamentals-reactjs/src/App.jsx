@@ -33,10 +33,6 @@ const posts = [
     content: [
       { type: 'paragraph', content: 'Quero Nada com nada' },
       { type: 'paragraph', content: 'front end > back end' },
-      { type: 'link', content: 'jane.design/doctorcare' },
-      { type: 'link', content: '#novoprojeto' },
-      { type: 'link', content: '#nlw' },
-      { type: 'link', content: '#rocketseat' }
     ],
     publishedAt: new Date('2024-05-02 08:00'),
   },  
@@ -50,10 +46,6 @@ const posts = [
     content: [
       { type: 'paragraph', content: 'ROBOOOOOO' },
       { type: 'paragraph', content: 'EXTERMINAR!!!' },
-      { type: 'link', content: 'jane.design/doctorcare' },
-      { type: 'link', content: '#novoprojeto' },
-      { type: 'link', content: '#nlw' },
-      { type: 'link', content: '#rocketseat' }
     ],
     publishedAt: new Date('2023-05-01 13:00'),
   },
@@ -69,6 +61,7 @@ function App() {
           {posts.map(post =>{
            return (
            <Post 
+           key={post.id}
            author={post.author}
            content = {post.content}
            publishedAt = {post.publishedAt}
