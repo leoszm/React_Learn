@@ -7,55 +7,48 @@ import { Comment } from './Comment';
 import styles from './Post.module.css';
 
 export function Post({ author, publishedAt, content }) {
-    //estado: variáveis que eu quero que o componente monitore
+
     const [comments, setComments] = useState([
         'post muito bacana, hein?!'
     ]);
 
-    const [newCommentText, setNewCommentText] = useState('')
-    /* Através do mdn intl
-        const publishedDateFormatted = new Intl.DateTimeFormat('pt-BR',
-            {
-                day: '2-digit',
-                month: 'long',
-                hour: '2-digit',
-                minute: '2-digit',
-            }
-        ).format(publishedAt);*/
-    /* Através do date-fns */
+    const [newCommentText, setNewCommentText] = useState('');
+
     const publishedDateFormatted = format(publishedAt, "dd 'de' LLLL 'às' HH:mm'h'", { locale: ptBR, });
 
     const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
         locale: ptBR,
         addSuffix: true,
     });
+
     function handleCreateNewComment() {
         event.preventDefault();
 
         const newCommentText = event.target.comment.value;
 
-        //imutabilidade
-        //setComments([1,2,3]); limitase quando chega ao 3, para tratar isso a forma esta abaixo
         setComments([...comments, newCommentText]);
 
         setNewCommentText('');
     }
+
     function handleNewCommentChange() {
         event.target.setCustomValidity('');
         setNewCommentText(event.target.value);
     }
 
-    function handleNewCommentInvalid(){
+    function handleNewCommentInvalid() {
         event.target.setCustomValidity('Esse campo é obrigatório!');
     }
 
     function deleteComment(commentToDelete) {
-        //imutabilidade -> as variáveis não sofrem mutação, nós criamos um novo valor(um novo espaço na memória)
         const commentsWithoutDeletedOne = comment.filter(comment => {
             return comment !== commentToDelete;
         })
         setComments(commentsWithoutDeletedOne);
     }
+
+const isNewCommentEmpty = newCommentText.length === 0;
+
     return (
         <article className={styles.post}>
             <header>
@@ -66,8 +59,7 @@ export function Post({ author, publishedAt, content }) {
                         <span>{author.role}</span>
                     </div>
                 </div>
-                {/* O html é muito exigente para trabalhar com datas, 
-                para resolver isso podemos utilizar bibliotecas do javascipt, como: mdn intl, date-fns */}
+
                 <time title={publishedDateFormatted} dateTime={publishedAt.toISOString()}>
                     {publishedDateRelativeToNow}
                 </time>
@@ -95,7 +87,9 @@ export function Post({ author, publishedAt, content }) {
                     required
                 ></textarea>
                 <footer>
-                    <button type='submit'>Comentar</button>
+                    <button type='submit' disabled={isNewCommentEmpty}>
+                        Comentar
+                    </button>
                 </footer>
             </form>
             <div className={styles.commentList}>
